@@ -18,6 +18,7 @@ typedef struct s2StepContext
 	float inv_h;
 	int32_t iterations;
 	int32_t extraIterations;
+	int32_t groupCount;
 	s2Body* bodies;
 	int32_t bodyCapacity;
 	bool warmStart;
@@ -42,6 +43,7 @@ typedef struct s2ContactConstraintPoint
 	float biasCoefficient;
 	float impulseCoefficient;
 	bool frictionValid;
+	float splitKFactor;
 } s2ContactConstraintPoint;
 
 typedef struct s2ContactConstraint
@@ -53,6 +55,8 @@ typedef struct s2ContactConstraint
 	s2Vec2 normal;
 	float friction;
 	int pointCount;
+	int splitIndexA;
+	int splitIndexB;
 } s2ContactConstraint;
 
 // common
@@ -75,3 +79,4 @@ void s2Solve_TGS_Soft(s2World* world, s2StepContext* stepContext);
 void s2Solve_TGS_Sticky(s2World* world, s2StepContext* stepContext);
 void s2Solve_TGS_NGS(s2World* world, s2StepContext* stepContext);
 void s2Solve_PGS(s2World* world, s2StepContext* stepContext);
+void s2Solve_SPLIT_MASSES(s2World* world, s2StepContext* stepContext);

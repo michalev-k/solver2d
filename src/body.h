@@ -64,11 +64,14 @@ typedef struct s2Body
 	float linearDamping;
 	float angularDamping;
 	float gravityScale;
-
+	
 	void* userData;
 	int16_t world;
 
 	bool enlargeAABB;
+
+	int32_t splitList;
+	int32_t splitCount;
 } s2Body;
 
 bool s2ShouldBodiesCollide(s2World* world, s2Body* bodyA, s2Body* bodyB);

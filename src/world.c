@@ -70,7 +70,7 @@ s2WorldId s2CreateWorld(const s2WorldDef* def)
 	world->index = id.index;
 
 	world->blockAllocator = s2CreateBlockAllocator();
-	world->stackAllocator = s2CreateStackAllocator(1024 * 1024);
+	world->stackAllocator = s2CreateStackAllocator(4 * 1024 * 1024);
 
 	world->solverType = def->solverType;
 
@@ -117,7 +117,7 @@ void s2DestroyWorld(s2WorldId id)
 	memset(world, 0, sizeof(s2World));
 }
 
-void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters, bool warmStart)
+void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters, int groupCount, bool warmStart)
 {
 	s2World* world = s2GetWorldFromId(worldId);
 	world->stepId += 1;
@@ -172,6 +172,7 @@ void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters,
 	context.dt = timeStep;
 	context.iterations = velIters;
 	context.extraIterations = posIters;
+	context.groupCount = groupCount;
 	context.warmStart = warmStart;
 	if (timeStep > 0.0f)
 	{
@@ -239,6 +240,10 @@ void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters,
 
 			case s2_solverXPBD:
 				s2Solve_XPBD(world, &context);
+				break;
+
+			case s2_solverSPLIT_MASSES:
+				s2Solve_SPLIT_MASSES(world, &context);
 				break;
 
 			default:
@@ -464,6 +469,10 @@ void s2World_Draw(s2WorldId worldId, s2DebugDraw* draw)
 
 			s2Transform transform = {body->position, body->rot};
 			draw->DrawTransform(transform, draw->context);
+
+			s2Transform transformOrigin = {body->origin, body->rot};
+			draw->DrawTransform(transformOrigin, draw->context);
+
 
 			s2Vec2 p = s2TransformPoint(transform, offset);
 
