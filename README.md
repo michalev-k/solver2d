@@ -23,9 +23,9 @@ Basically it is the TGS Soft equivalent of Mass Splitting.
 You can see it here: [video](https://youtu.be/FG2N6LqkdD0)
 
 Solving multiple times per substep seems to increase the quality of the solution, so I made it configurable.
-Main Iters -> Substepping iterations
-Extra Iters -> Inner solution iterations
-Relax Iters -> inner relaxation iterations
+- Main Iters -> Substepping iterations
+- Extra Iters -> Inner solution iterations
+- Relax Iters -> inner relaxation iterations
 
 Unlike the Mass Splitting Solver it does not use grouping.
 Still it provides surprisingly excellent quality.
@@ -38,4 +38,4 @@ That being said, you can also decide to add grouping to this for further improve
 I just personally did not like the additional complexity of grouping and contact-reordering.
 Maybe it is worth it though. 
 
-As the original Solver2D code, any changes here are licensed under MIT as well.
+Like the original Solver2D code, any changes here are licensed under MIT as well.
