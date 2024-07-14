@@ -61,6 +61,9 @@ s2BodyId s2CreateBody(s2WorldId worldId, const s2BodyDef* def)
 	b->splitList = S2_NULL_INDEX;
 	b->splitCount = 0;
 
+	b->splitListJoints = S2_NULL_INDEX;
+	b->splitJointsCount = 0;
+
 	s2BodyId id = {b->object.index, worldId.index, b->object.revision};
 	return id;
 }
