@@ -18,10 +18,12 @@ typedef struct s2StepContext
 	float inv_h;
 	int32_t iterations;
 	int32_t extraIterations;
+	int32_t relaxationIterations;
 	int32_t groupCount;
 	s2Body* bodies;
 	int32_t bodyCapacity;
 	bool warmStart;
+	bool solveJointsWithContacts;
 } s2StepContext;
 
 typedef struct s2ContactConstraintPoint

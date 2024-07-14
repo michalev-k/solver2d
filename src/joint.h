@@ -89,6 +89,7 @@ typedef struct s2Joint
 	s2Vec2 localOriginAnchorA;
 	s2Vec2 localOriginAnchorB;
 	float drawSize;
+	int32_t solveBodyIndex;
 
 	union
 	{

@@ -17,11 +17,14 @@ struct Settings
 	float timeStep = 1.0f / 60.0f;
 	int primaryIterations = 4;
 	int secondaryIterations = 2;
+	int relaxationIterations = 2;
+	int groupCount = 4;
 	int multiSteps = 1;
 	int textLine = 0;
 	int textIncrement = 18;
 	bool enabledSolvers[s2_solverTypeCount] = {};
 	bool enableWarmStarting = true;
+	bool solveJointsWithContacts = false;
 	bool drawShapes = true;
 	bool drawJoints = true;
 	bool drawAABBs = false;

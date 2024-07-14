@@ -72,6 +72,9 @@ typedef struct s2Body
 
 	int32_t splitList;
 	int32_t splitCount;
+
+	int32_t splitListJoints;
+	int32_t splitJointsCount;
 } s2Body;
 
 bool s2ShouldBodiesCollide(s2World* world, s2Body* bodyA, s2Body* bodyB);

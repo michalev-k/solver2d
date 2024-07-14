@@ -133,7 +133,7 @@ void Sample::Step(Settings& settings, s2Color bodyColor)
 	{
 		for (int i = 0; i < settings.multiSteps; ++i)
 		{
-			s2World_Step(m_worldId, settings.timeStep, settings.primaryIterations, settings.secondaryIterations, settings.enableWarmStarting);
+			s2World_Step(m_worldId, settings.timeStep, settings.primaryIterations, settings.secondaryIterations, settings.relaxationIterations, settings.groupCount, settings.enableWarmStarting, settings.solveJointsWithContacts);
 			++m_stepCount;
 		}
 	}

@@ -405,9 +405,14 @@ static void UpdateUI(s2Color* solverColors)
 			ImGui::PushItemWidth(100.0f);
 			ImGui::SliderInt("Main Iters", &s_settings.primaryIterations, 0, 50);
 			ImGui::SliderInt("Extra Iters", &s_settings.secondaryIterations, 0, 50);
+			ImGui::SliderInt("Relax Iters", &s_settings.relaxationIterations, 0, 15);
+			ImGui::SliderInt("Groups", &s_settings.groupCount, 1, 1000);
+
 			ImGui::SliderInt("Multi-Steps", &s_settings.multiSteps, 1, 200);
 			ImGui::SliderFloat("Hertz", &s_settings.hertz, 5.0f, 480.0f, "%.0f Hz");
 			ImGui::Checkbox("Warm Starting", &s_settings.enableWarmStarting);
+			ImGui::Checkbox("solve joints with contacts", &s_settings.solveJointsWithContacts);
+
 			ImGui::PopItemWidth();
 
 			ImGui::Separator();
@@ -450,6 +455,16 @@ static void UpdateUI(s2Color* solverColors)
 			c = solverColors[s2_solverXPBD];
 			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4{c.r, c.g, c.b, c.a});
 			ImGui::Checkbox("XPBD", &s_settings.enabledSolvers[s2_solverXPBD]);
+			ImGui::PopStyleColor();
+
+			c = solverColors[s2_solverSPLIT_MASSES];
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4{c.r, c.g, c.b, c.a});
+			ImGui::Checkbox("Split Masses", &s_settings.enabledSolvers[s2_solverSPLIT_MASSES]);
+			ImGui::PopStyleColor();
+
+			c = solverColors[s2_solverMSTJ_Soft];
+			ImGui::PushStyleColor(ImGuiCol_Text, ImVec4{c.r, c.g, c.b, c.a});
+			ImGui::Checkbox("MSTJ Soft", &s_settings.enabledSolvers[s2_solverMSTJ_Soft]);
 			ImGui::PopStyleColor();
 
 			ImGui::Separator();
@@ -681,6 +696,8 @@ int main(int, char**)
 		s2MakeColor(s2_colorYellow2, colorAlpha),
 		s2MakeColor(s2_colorOrchid, colorAlpha),
 		s2MakeColor(s2_colorSpringGreen, colorAlpha),
+		s2MakeColor(s2_colorCornflowerBlue, colorAlpha),
+		s2MakeColor(s2_colorOrangeRed, colorAlpha),
 	};
 
 	static_assert(S2_ARRAY_COUNT(solverColors) == s2_solverTypeCount);

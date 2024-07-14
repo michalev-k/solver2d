@@ -83,6 +83,7 @@ typedef enum s2SolverType
 	s2_solverTGS_NGS,
 	s2_solverXPBD,
 	s2_solverSPLIT_MASSES,
+	s2_solverMSTJ_Soft,
 	s2_solverTypeCount,
 } s2SolverType;
 

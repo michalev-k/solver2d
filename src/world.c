@@ -117,7 +117,7 @@ void s2DestroyWorld(s2WorldId id)
 	memset(world, 0, sizeof(s2World));
 }
 
-void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters, int groupCount, bool warmStart)
+void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters, int relaxIters, int groupCount, bool warmStart, bool solveJointsWithContacts)
 {
 	s2World* world = s2GetWorldFromId(worldId);
 	world->stepId += 1;
@@ -172,8 +172,10 @@ void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters,
 	context.dt = timeStep;
 	context.iterations = velIters;
 	context.extraIterations = posIters;
+	context.relaxationIterations = relaxIters;
 	context.groupCount = groupCount;
 	context.warmStart = warmStart;
+	context.solveJointsWithContacts = solveJointsWithContacts;
 	if (timeStep > 0.0f)
 	{
 		context.inv_dt = 1.0f / timeStep;
@@ -187,7 +189,8 @@ void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters,
 	if (type == s2_solverXPBD ||
 		type == s2_solverTGS_Soft ||
 		type == s2_solverTGS_Sticky ||
-		type == s2_solverTGS_NGS)
+		type == s2_solverTGS_NGS || 
+		type == s2_solverMSTJ_Soft)
 	{
 		context.h = context.dt / context.iterations;
 		context.inv_h = context.inv_dt * context.iterations;
@@ -244,6 +247,10 @@ void s2World_Step(s2WorldId worldId, float timeStep, int velIters, int posIters,
 
 			case s2_solverSPLIT_MASSES:
 				s2Solve_SPLIT_MASSES(world, &context);
+				break;
+
+			case s2_solverMSTJ_Soft:
+				s2Solve_MSTJ_Soft(world, &context);
 				break;
 
 			default:

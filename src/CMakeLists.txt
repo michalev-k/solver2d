@@ -37,6 +37,7 @@ set(S2D_SOURCE_FILES
 	solve_tgs_sticky.c
 	solve_xpbd.c
 	solve_split_masses.c
+	solve_mstj_soft.c
 	solvers.h
 	stack_allocator.c
 	stack_allocator.h
